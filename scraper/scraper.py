@@ -46,7 +46,7 @@ class Scraper:
                 incident.level = incident_data['level']
                 incident.save()
                 
-                self.incident_logger.info("start, id: %s, type_id: %s, loc_str: %s, lvl: %s" % (incident.incident_id,
+                self.incident_logger.info("start, id: %s, type_id: \"%s\", loc_str: %s, lvl: %s" % (incident.incident_id,
                                                                                            incident.type.type_name,
                                                                                            incident.location_text,
                                                                                            incident.level))
