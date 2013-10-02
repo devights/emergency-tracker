@@ -47,7 +47,7 @@ class Scraper:
                 incident.save()
                 
                 self.incident_logger.info("start, id: %s, type_id: %s, loc_str: %s, lvl: %s" % (incident.incident_id,
-                                                                                           incident.type,
+                                                                                           incident.type.type_name,
                                                                                            incident.location_text,
                                                                                            incident.level))
 
