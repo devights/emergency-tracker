@@ -46,12 +46,9 @@ class Scraper:
             
             #write incident text to splunk, include vehicles
         if incident is not None and incident_data['status'] == 'closed' and incident.end is None:
-            print "ENDING AN EVENT"
             incident.end = datetime.now()
-            print "end"
             incident.save()
-            print "saved"
-            
+
         for vehic_data in incident_data['units']:
             p = re.compile("([A-Za-z]+)")
             match = p.search(vehic_data)
@@ -60,15 +57,11 @@ class Scraper:
             
             vehicle, created = Vehicle.objects.get_or_create(name=vehic_data,
                                                             defaults={'type': vehic_type})
-#            if created:
-#                vehicle.type = vehic_type
-#                vehicle.save
-            
-        #Store IncidentType
-        #store incident
-            #if closed, mark closed 
-            #if open see if 
-        
+            if incident is not None:
+                dispatch, created = Dispatch.objects.get_or_create(vehicle_id = vehicle,
+                                                               incident_id = incident)
+                if created:
+                    #log dispatch to splunk
         
         
         
