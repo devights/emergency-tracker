@@ -10,6 +10,6 @@ before_script:
   - python manage.py syncdb --noinput
 script:
   - pep8 scraper/ --exclude=migrations,scraper/test
-  - coverage run --source=scraper/ manage.py test scrape
+  - coverage run --source=scraper/ manage.py test scraper
 after_script:
   - coveralls
