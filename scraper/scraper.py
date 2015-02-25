@@ -6,8 +6,8 @@ from lxml import etree
 from StringIO import StringIO
 from models import Vehicle, VehicleType, Incident, IncidentType, Dispatch
 
-PAGE_URL = "http://www2.cityofseattle.net/fire/realTime911/"" \
-""getRecsForDatePub.asp?action=Today&incDate=&rad1=des"
+PAGE_URL = ('http://www2.cityofseattle.net/fire/realTime911/'
+            'getRecsForDatePub.asp?action=Today&incDate=&rad1=des')
 
 
 class Scraper:
