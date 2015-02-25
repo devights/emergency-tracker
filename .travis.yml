@@ -9,7 +9,7 @@ before_script:
   - cp travis-ci/manage.py manage.py
   - python manage.py syncdb --noinput
 script:
-  - pep8 data_import/ --exclude=migrations,scraper/test
-  - coverage run --source=scraper/ manage.py test data_import
+  - pep8 scraper/ --exclude=migrations,scraper/test
+  - coverage run --source=scraper/ manage.py test scrape
 after_script:
   - coveralls
