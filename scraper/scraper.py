@@ -6,6 +6,7 @@ from lxml import etree
 from StringIO import StringIO
 from models import Vehicle, VehicleType, Incident, IncidentType, Dispatch
 
+
 class Scraper:
     dispatch_logger = logging.getLogger('dispatch')
     incident_logger = logging.getLogger('incident')
@@ -46,10 +47,12 @@ class Scraper:
                 incident.level = incident_data['level']
                 incident.save()
                 
-                self.incident_logger.info("start, id: %s, type_id: \"%s\", loc_str: %s, lvl: %s" % (incident.incident_id,
-                                                                                           incident.type.type_name,
-                                                                                           incident.location_text,
-                                                                                           incident.level))
+                self.incident_logger.info("start, id: %s, type_id:"
+                                          "\"%s\", loc_str: %s, lvl: %s"
+                                          % (incident.incident_id,
+                                             incident.type.type_name,
+                                             incident.location_text,
+                                             incident.level))
 
         if incident is not None and incident_data['status'] == 'closed' and incident.end is None:
             incident.end = datetime.now()
@@ -63,13 +66,9 @@ class Scraper:
             vehic_type, created = VehicleType.objects.get_or_create(name=type_string)
             
             vehicle, created = Vehicle.objects.get_or_create(name=vehic_data,
-                                                            defaults={'type': vehic_type})
+                                                             defaults={'type': vehic_type})
             if incident is not None:
-                dispatch, created = Dispatch.objects.get_or_create(vehicle_id = vehicle,
-                                                               incident_id = incident)
+                dispatch, created = Dispatch.objects.get_or_create(vehicle_id=vehicle,
+                                                                   incident_id=incident)
                 if created:
                     self.dispatch_logger.info("vehic: %s, incident: %s" % (vehicle.name, incident.incident_id))
-        
-        
-        
-        
