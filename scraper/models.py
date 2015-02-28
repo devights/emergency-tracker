@@ -25,7 +25,13 @@ class IncidentType(models.Model):
 class Dispatch(models.Model):
     vehicle_id = models.ForeignKey('Vehicle')
     incident_id = models.ForeignKey('Incident')
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()
+
+    def dispatch(self, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+        self.timestamp = timezone.now()
+        self.save()
 
 
 class Vehicle(models.Model):

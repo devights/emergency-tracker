@@ -1,7 +1,7 @@
 import urllib2
 import re
 import logging
-from datetime import datetime
+from django.core.exceptions import ObjectDoesNotExist
 from lxml import etree
 from StringIO import StringIO
 from models import Vehicle, VehicleType, Incident, IncidentType, Dispatch
@@ -77,10 +77,14 @@ class Scraper:
                 Vehicle.objects.get_or_create(name=vehic_data,
                                               defaults={'type': vehic_type})
             if incident is not None:
-                dispatch, created = \
-                    Dispatch.objects.get_or_create(vehicle_id=vehicle,
-                                                   incident_id=incident)
-                if created:
+                try:
+                    Dispatch.objects.get(vehicle_id=vehicle,
+                                         incident_id=incident)
+                except ObjectDoesNotExist:
+                    dispatch = Dispatch()
+                    dispatch.dispatch(vehicle_id=vehicle,
+                                      incident_id=incident)
                     self.dispatch_logger.info("vehic: %s, incident: %s" %
                                               (vehicle.name,
                                                incident.incident_id))
+                    pass
