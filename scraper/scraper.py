@@ -5,6 +5,7 @@ from datetime import datetime
 from lxml import etree
 from StringIO import StringIO
 from models import Vehicle, VehicleType, Incident, IncidentType, Dispatch
+from django.utils import timezone
 
 PAGE_URL = ('http://www2.cityofseattle.net/fire/realTime911/'
             'getRecsForDatePub.asp?action=Today&incDate=&rad1=des')
@@ -44,12 +45,13 @@ class Scraper:
                 incident_id=incident_data['incident_id'])
         except Incident.DoesNotExist:
             if incident_data['status'] == 'active':
+                incident_args = {'incident_id':incident_data['incident_id'],
+                                  'type': incident_type,
+                                  'location_text': incident_data['location'],
+                                  'level': incident_data['level']
+                                  }
                 incident = Incident()
-                incident.incident_id = incident_data['incident_id']
-                incident.type = incident_type
-                incident.location_text = incident_data['location']
-                incident.level = incident_data['level']
-                incident.save()
+                incident.create_incident(**incident_args)
 
                 self.incident_logger.info("start, id: %s, type_id:"
                                           "\"%s\", loc_str: %s, lvl: %s"
@@ -60,7 +62,7 @@ class Scraper:
 
         if incident is not None and incident_data['status'] == 'closed' and \
                 incident.end is None:
-            incident.end = datetime.now()
+            incident.end = timezone.now()
             incident.save()
             self.incident_logger.info("end, id: %s" % incident.incident_id)
 

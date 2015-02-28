@@ -1,13 +1,20 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Incident(models.Model):
-    incident_id = models.CharField(max_length=10)
-    start = models.DateTimeField(auto_now_add=True)
+    incident_id = models.CharField(max_length=10, primary_key=True)
+    start = models.DateTimeField()
     end = models.DateTimeField(null=True)
     location_text = models.CharField(max_length=255)
     type = models.ForeignKey('IncidentType')
     level = models.IntegerField()
+
+    def create_incident(self, **kwargs):
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+        self.start = timezone.now()
+        self.save()
 
 
 class IncidentType(models.Model):
