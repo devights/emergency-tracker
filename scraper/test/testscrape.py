@@ -26,7 +26,6 @@ class TestScraper(TestCase):
         sc.store_data(INCIDENTS[0])
         self.assertEqual(1, len(Incident.objects.all()))
 
-
     def test_open_close(self):
         sc = Scraper()
         sc.store_data(INCIDENTS[0])

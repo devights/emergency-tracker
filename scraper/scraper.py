@@ -45,11 +45,11 @@ class Scraper:
                 incident_id=incident_data['incident_id'])
         except Incident.DoesNotExist:
             if incident_data['status'] == 'active':
-                incident_args = {'incident_id':incident_data['incident_id'],
-                                  'type': incident_type,
-                                  'location_text': incident_data['location'],
-                                  'level': incident_data['level']
-                                  }
+                incident_args = {'incident_id': incident_data['incident_id'],
+                                 'type': incident_type,
+                                 'location_text': incident_data['location'],
+                                 'level': incident_data['level']
+                                 }
                 incident = Incident()
                 incident.create_incident(**incident_args)
 
