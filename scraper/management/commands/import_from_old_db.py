@@ -13,7 +13,7 @@ class Command(BaseCommand):
                              user=settings.OLD_DB_USER,
                              passwd=settings.OLD_DB_PASS,
                              db=settings.OLD_DB_DB,
-                             cursorclass= MySQLdb.cursors.SSCursor)
+                             cursorclass=MySQLdb.cursors.SSCursor)
 
         cur = db.cursor()
 
