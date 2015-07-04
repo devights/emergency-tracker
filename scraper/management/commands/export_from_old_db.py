@@ -6,7 +6,7 @@ import csv
 
 
 class Command(BaseCommand):
-    help = 'Imports data from legacy database format'
+    help = 'Exports data from legacy database format'
 
     def handle(self, *args, **options):
         db = MySQLdb.connect(host= settings.OLD_DB_HOST,

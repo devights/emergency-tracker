@@ -8,7 +8,7 @@ class Incident(models.Model):
     end = models.DateTimeField(null=True)
     location_text = models.CharField(max_length=255)
     type = models.ForeignKey('IncidentType')
-    level = models.IntegerField()
+    level = models.IntegerField(null=True)
 
     def create_incident(self, **kwargs):
         for key, value in kwargs.iteritems():
