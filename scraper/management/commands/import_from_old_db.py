@@ -1,11 +1,10 @@
-from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
-from scraper.models import Incident, IncidentType, Dispatch, Vehicle, VehicleType
+from django.core.management.base import BaseCommand
+from scraper.models import Incident, IncidentType, \
+    Dispatch, Vehicle, VehicleType
 import csv
 import datetime
 import re
 from pytz import timezone
-
 
 
 class Command(BaseCommand):
@@ -50,7 +49,7 @@ class Command(BaseCommand):
                     incident_models = []
                     print 'processing incident'
 
-        dispatch_models =[]
+        dispatch_models = []
         print 'processing dispatch'
         with open(dispatch_path, 'rb') as csvfile:
             dispatch_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -83,6 +82,3 @@ class Command(BaseCommand):
                     Dispatch.objects.bulk_create(dispatch_models)
                     dispatch_models = []
                     print 'processing dispatch'
-
-
-
