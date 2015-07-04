@@ -14,9 +14,9 @@ class TestScraper(TestCase):
     def test_data(self):
         sc = Scraper()
         sc.store_data(INCIDENTS[0])
-        self.assertEqual("F150020627", Incident.objects.get(id=1).incident_id)
-        self.assertEqual("2717 Dexter Av N", Incident.objects.get(id=1).location_text)
-        self.assertEqual("Medic Response", Incident.objects.get(id=1).type.type_name)
+        self.assertEqual("F150020627", Incident.objects.all()[0].incident_id)
+        self.assertEqual("2717 Dexter Av N", Incident.objects.all()[0].location_text)
+        self.assertEqual("Medic Response", Incident.objects.all()[0].type.type_name)
         self.assertEqual("E9", Vehicle.objects.get(id=1).name)
 
     def test_no_dupes(self):
@@ -26,13 +26,12 @@ class TestScraper(TestCase):
         sc.store_data(INCIDENTS[0])
         self.assertEqual(1, len(Incident.objects.all()))
 
-
     def test_open_close(self):
         sc = Scraper()
         sc.store_data(INCIDENTS[0])
-        self.assertIsNone(Incident.objects.get(id=1).end)
+        self.assertIsNone(Incident.objects.all()[0].end)
         sc.store_data(INCIDENTS[1])
-        self.assertIsNotNone(Incident.objects.get(id=1).end)
+        self.assertIsNotNone(Incident.objects.all()[0].end)
 
     def test_dupe_vehic(self):
         sc = Scraper()
