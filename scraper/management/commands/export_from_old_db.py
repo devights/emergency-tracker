@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Exports data from legacy database format'
 
     def handle(self, *args, **options):
-        db = MySQLdb.connect(host= settings.OLD_DB_HOST,
+        db = MySQLdb.connect(host=settings.OLD_DB_HOST,
                              user=settings.OLD_DB_USER,
                              passwd=settings.OLD_DB_PASS,
                              db=settings.OLD_DB_DB,
