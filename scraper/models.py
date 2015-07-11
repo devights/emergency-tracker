@@ -13,7 +13,6 @@ class Incident(models.Model):
     def create_incident(self, **kwargs):
         for key, value in kwargs.iteritems():
             setattr(self, key, value)
-        self.start = timezone.now()
         self.save()
 
 

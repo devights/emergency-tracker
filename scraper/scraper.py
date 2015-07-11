@@ -6,6 +6,8 @@ from lxml import etree
 from StringIO import StringIO
 from models import Vehicle, VehicleType, Incident, IncidentType, Dispatch
 from django.utils import timezone
+from dateutil import parser
+from pytz import timezone as pytz_timezone
 
 PAGE_URL = ('http://www2.cityofseattle.net/fire/realTime911/'
             'getRecsForDatePub.asp?action=Today&incDate=&rad1=des')
@@ -39,6 +41,8 @@ class Scraper:
     def store_data(self, incident_data):
         incident_type, created = IncidentType.objects.get_or_create(
             type_name=incident_data['type'])
+        local_tz = pytz_timezone('America/Los_Angeles')
+        date = local_tz.localize(parser.parse(incident_data['datetime']))
         incident = None
         try:
             incident = Incident.objects.get(
@@ -48,7 +52,8 @@ class Scraper:
                 incident_args = {'incident_id': incident_data['incident_id'],
                                  'type': incident_type,
                                  'location_text': incident_data['location'],
-                                 'level': incident_data['level']
+                                 'level': incident_data['level'],
+                                 'start': date
                                  }
                 incident = Incident()
                 incident.create_incident(**incident_args)
