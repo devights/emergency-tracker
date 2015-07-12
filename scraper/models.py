@@ -16,6 +16,18 @@ class Incident(models.Model):
         self.start = timezone.now()
         self.save()
 
+    def to_json(self):
+        json = {'incident_id': self.incident_id,
+                'start': self.start.isoformat(),
+                'end': None,
+                'location': self.location_text,
+                'type': self.type.type_name,
+                'level': self.level}
+        if self.end is not None:
+            json['end'] = self.end.isoformat()
+        return json
+
+
 
 class IncidentType(models.Model):
     incident_type_id = models.AutoField(primary_key=True)

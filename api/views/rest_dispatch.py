@@ -30,6 +30,7 @@ class RESTDispatch:
         else:
             return invalid_method()
 
+
 def invalid_method():
     response = HttpResponse("Method not allowed")
     response.status_code = 405
