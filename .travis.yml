@@ -13,3 +13,4 @@ script:
   - coverage run --source=scraper/ manage.py test scraper
 after_script:
   - coveralls
+sudo: false
