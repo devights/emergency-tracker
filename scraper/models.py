@@ -28,7 +28,6 @@ class Incident(models.Model):
         return json
 
 
-
 class IncidentType(models.Model):
     incident_type_id = models.AutoField(primary_key=True)
     type_name = models.CharField(max_length=255)
