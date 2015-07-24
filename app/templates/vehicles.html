@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> Vehicles</h1>
+    <div>
+    <table border="1">
+        <tr>
+            <th>Type</th>
+            <th>Count</th>
+            <th>Description</th>
+            <th>Image</th>
+        </tr>
+    {% for type in types %}
+        <tr>
+            <td>
+                {% if type.attrs.long_name %}
+                    {{ type.attrs.long_name }}
+                {% else %}
+                    {{ type.name }}
+                {% endif %}
+            </td>
+            <td>{{ type.type_count }}</td>
+            <td>{{ type.attrs.description }}</td>
+        <td>
+            {% if type.attrs.img_path %}
+                {% load static %}
+                <img width="100px" height="100px" src="{% static "img" %}/{{ type.attrs.img_path }}">
+            {% endif %}
+        </td>
+
+        </tr>
+
+    {% endfor %}
+    </table>
+    </div>
+{% endblock %}
