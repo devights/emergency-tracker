@@ -1,4 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-<h1> dis da site: </h1>
+<h1> Welcome</h1>
+    <p>There are currently {{ incidents|length }} incidents with {{ dispatched_vehicles|length }} vehicles dispatched.</p>
+    <div id="incident_list">
+    <h2>Current Incidents</h2>
+        <table border="1">
+        <tr>
+            <th>Incident ID</th>
+            <th>Incident Start</th>
+            <th>Type</th>
+        </tr>
+            {% for incident in incidents %}
+            <tr>
+                <td>{{ incident.incident_id }}</td>
+                <td>{{ incident.start }}</td>
+                <td>{{ incident.type.type_name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="vehicle_list">
+    <h2>Dispatched Vehicles</h2>
+    <table border="1">
+        <tr>
+            <th>Vehicle</th>
+        </tr>
+        {% for vehicle in dispatched_vehicles %}
+        <tr>
+            <td>{{ vehicle.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
 {% endblock %}
